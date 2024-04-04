@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Total Data Science</title>
+  <link rel="stylesheet" href="../static/index.css">
+  <style>
+    .result-container{
+      position:absolute;
+      top:0%;
+      left: 0%;
+      background-color:rgba(0,0,0,0.7);
+      width: 100%;
+      height: 109vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+    }
+    .result-container span{
+      color: white;
+      font-size:35px;
+      position: absolute;
+      top:15%;
+      right: 25%;
+      cursor: pointer;
+    }
+    .result-box{
+      background-color:white;
+      width:350px;
+      height:350px;
+      border-radius: 5px;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      text-align: center;
+    }
+    .result-box h2{
+      font-size:35px;
+      color: green;
+      font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    }
+    .result-box p{
+      font-size: 30px;
+      margin-top: -7px;
+    }
+  </style>
+  
+</head>
+
+<body>
+
+<img src="https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/news14109.jpg" alt="zomato image", width="400", height="150", style="float:left">
+
+<img src="https://totaldatascience.com/wp-content/uploads/2019/10/TOTAL-1.png" alt="zomato image", width="200", height="70", style="float:right">
+
+
+
+ <div class="login">
+	<h1>Predict Zomato Restaurant Ratings</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+      <select name="Online Order" required>
+        <option>Select Order Value</option>
+        <option>0</option>
+        <option>1</option>
+      </select>
+        <select name="Book Table" required>
+          <option>Select Table Value</option>
+          <option>0</option>
+          <option>1</option>
+        </select>
+		    <input type="number" name="Votes" placeholder="Votes" required min="0" max="16832" />
+        <input type="number" name="Location" placeholder="Location" required min="0" max="87"/>
+        <input type="number" name="Restaurant Type" placeholder="Restaurant Type" required min="0" max="72"/>
+        <input type="number" name="Cuisines" placeholder="Cuisines" required min="0" max="1680"/>
+        <input type="number" name="Cost" placeholder="Cost" required min="40" max="6000"/>
+        <input type="number" name="Menu Item" placeholder="Menu Item" required min="0" max="5047"/>
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <br>
+
+ </div>
+ <br>
+ {% if prediction_text %}
+ <div class="result-container" id="result-container">
+    <span onclick="ResultClose()">&times;</span>
+    <div class="result-box">
+      <h2>Your Rating</h2>
+      <p>{{prediction_text}}</p>
+    </div>
+ </div>
+ {% endif %}
+
+ <script>
+  function ResultClose(){
+    var result=document.getElementById("result-container").style;
+    result.display='none';
+
+  }
+ </script>
+</body>
+</html>
